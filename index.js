@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const { add } = require('./routes/bucketlist')
+const { add, remove, edit } = require('./routes/bucketlist')
 const mongoose = require('mongoose');
 const  home  = require('./routes/home')
 const path  = require('path');
@@ -35,8 +35,10 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 
 
 
-app.use('/home', home)
-app.use('/add', add)
+app.use('/home', home);
+app.use('/add', add);
+app.use('/remove', remove);
+app.use('/edit', edit)
 
 app.get('/', (req, res) =>{
     res.redirect('/home');
