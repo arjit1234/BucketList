@@ -4,6 +4,7 @@ const { add, remove, edit } = require('./routes/bucketlist')
 const mongoose = require('mongoose');
 const  home  = require('./routes/home')
 const path  = require('path');
+const cors = require('cors');
 
 const app = express();
 const port = 300
@@ -21,16 +22,19 @@ async function connect() {
   connect();
 
 
+  app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend server URL
+    credentials: true, // Allow cookies to be sent to/from the frontend
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.set('views', 'views');
-app.set('view engine', 'ejs');
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../BucketList/BucketList/index.html'));
+});
 
-// Serve static files
-app.use('/public', express.static(path.join(__dirname, 'public')))
-
+app.use(express.static(path.join(__dirname, '../BucketList/BucketList')));
 
 
 

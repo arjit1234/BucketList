@@ -21,7 +21,7 @@ add.get('', async (req, res) => {
         } catch (error) {
             console.log(error);
         }
-        res.redirect('/home');
+        res.status(200).send({ message: 'Bucket Added Successfully' });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -37,7 +37,7 @@ remove.get('/:id', async(req, res) => {
         } catch (error) {
             res.status(500).json({});
         }
-        res.redirect('/home');
+        res.status(200).send({ message: 'Bucket Removed Successfully' });
     } catch(error) {
         res.status(500).send(error.message);
     }
@@ -47,6 +47,7 @@ remove.get('/:id', async(req, res) => {
 get.get('/:id', async(req, res) => {
     try{
         const itemId = req.params.id;
+        console.log(itemId,"update waa");
         const item = await Bucket.findById(itemId);
         if (!item) {
             return res.status(404).json({ error: 'Item not found' });
@@ -58,11 +59,12 @@ get.get('/:id', async(req, res) => {
 });
 
 //Update Bucket
-edit.get('/:id', async(req, res) => {
+edit.put('/:id', async(req, res) => {
     try{
-        const itemId = req.params.id;
-        const {topic, startDate, endDate} = req.query;
 
+        const itemId = req.params.id; console.log(req.body);
+        const {topic, startDate, endDate} = req.body;
+        
         try {
             await Bucket.updateOne({_id : itemId}, {topic, startDate, endDate});
             console.log('Bucket Updated SuccessFully');
@@ -70,7 +72,8 @@ edit.get('/:id', async(req, res) => {
             res.status(500).send(error.message);
         }
 
-        res.redirect('/home');
+        res.status(200).send({ message: 'Bucket Updated Successfully' });
+        // res.redirect('/api/home');
 
     } catch (error) {
         res.status(500).send(error.message);

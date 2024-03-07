@@ -7,8 +7,8 @@ home.get('' , async(req,res) => {
     try {
 
         const buckets = await Bucket.find({});
-        
-        res.render('home', {buckets})
+     
+        res.json(buckets);
     } catch (error) {
         console.log(error);
     }
