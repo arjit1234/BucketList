@@ -6,9 +6,7 @@ const home = express.Router();
 home.get('' , async(req,res) => {
     try {
 
-        const buckets = await Bucket.find({});
-     
-        res.json(buckets);
+       re.status(200);
     } catch (error) {
         console.log(error);
     }

@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-const { add, remove, edit } = require('./routes/bucketlist')
+const { manage, add, remove, edit } = require('./routes/bucketlist')
+const { login, register } = require('./routes/user');
 const mongoose = require('mongoose');
 const  home  = require('./routes/home')
 const path  = require('path');
@@ -40,9 +41,12 @@ app.use(express.static(path.join(__dirname, '../BucketList/BucketList')));
 
 
 app.use('/home', home);
+app.use('/login', login);
+app.use('/register', register);
+app.use('/manage', manage);
 app.use('/add', add);
 app.use('/remove', remove);
-app.use('/edit', edit)
+app.use('/edit', edit);
 
 app.get('/', (req, res) =>{
     res.redirect('/home');

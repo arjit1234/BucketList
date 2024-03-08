@@ -3,8 +3,20 @@ const add = express.Router();
 const remove = express.Router();
 const get = express.Router();
 const edit = express.Router();
+const manage = express.Router();
 const Bucket = require('../models/Buckets');
 
+
+manage.get('' , async(req,res) => {
+    try {
+
+        const buckets = await Bucket.find({});
+     
+        res.json(buckets);
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 add.get('', async (req, res) => {
     try {
@@ -83,5 +95,6 @@ edit.put('/:id', async(req, res) => {
 module.exports = {
     add : add,
     remove: remove,
-    edit: edit
+    edit: edit,
+    manage: manage
 }
